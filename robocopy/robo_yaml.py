@@ -1,12 +1,16 @@
-import yaml
+from robocopy import Robocopy
 from pathlib import Path
-from . import Robocopy
+import yaml
 import re
+import click
 
-def robocopy_yaml(path):
-    if not isinstance(path, Path):
-        path = Path(path)
-    with open(path, 'r') as file:
+
+@click.command()
+@click.option('--config_path', required=True, type=Path)
+def robocopy_yaml(config_path):
+    if not isinstance(config_path, Path):
+        config_path = Path(config_path)
+    with open(config_path, 'r') as file:
         cfg = yaml.load(file, Loader=yaml.SafeLoader)
     defs = cfg['Defaults']
 
@@ -29,3 +33,6 @@ def convert_paths(dict):
         if isinstance(value, str):
             if regex.match(value):
                 dict[key] = Path(value)
+
+if __name__ == '__main__':
+    robocopy_yaml()
