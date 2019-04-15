@@ -1,8 +1,8 @@
 from pathlib import Path
-import os
 from subprocess import call
-import re
 from datetime import datetime
+import re
+
 
 def Robocopy(
     source,
